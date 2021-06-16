@@ -121,7 +121,7 @@ class _AddEventPageState extends State<AddEventPage> {
                                 await eventDBS.createItem(EventModel(
                                     title: _title.text,
                                     description: _description.text,
-                                    eventDate: DateTime.now()));
+                                    eventDate: _eventDate));
                               }
                               Navigator.pop(context);
                               setState(() {
