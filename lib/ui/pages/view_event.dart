@@ -7,7 +7,7 @@ class EventDetailsPage extends StatelessWidget {
   const EventDetailsPage({Key key, this.event}) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Event details'),
@@ -17,7 +17,10 @@ class EventDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(event.title, style: Theme.of(context).textTheme.display1,),
+            Text(
+              event.title,
+              style: Theme.of(context).textTheme.display1,
+            ),
             SizedBox(height: 20.0),
             Text(event.description)
           ],

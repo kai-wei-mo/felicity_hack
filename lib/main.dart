@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar/res/event_firestore_service.dart';
@@ -18,9 +17,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Calendar',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        // Define the default brightness and colors.
+        brightness: Brightness.dark,
+        primaryColor: Colors.deepPurple[300],
+        // ignore: deprecated_member_use
+        accentColor: Colors.deepPurple[100],
+
+        // Define the default font family.
+        fontFamily: 'Georgia',
       ),
       home: HomePage(),
       routes: {
@@ -53,7 +58,9 @@ class _HomePageState extends State<HomePage> {
     allEvents.forEach((event) {
       DateTime date = DateTime(
           event.eventDate.year, event.eventDate.month, event.eventDate.day, 12);
-      if (data[date] == null) data[date] = [];
+      if (data[date] == null) {
+        data[date] = [];
+      }
       data[date].add(event);
     });
     return data;
@@ -85,29 +92,40 @@ class _HomePageState extends State<HomePage> {
                     events: _events,
                     initialCalendarFormat: CalendarFormat.week,
                     calendarStyle: CalendarStyle(
-                        canEventMarkersOverflow: true,
-                        todayColor: Colors.orange,
-                        selectedColor: Theme.of(context).primaryColor,
+                        todayColor: Colors.deepPurple[200],
+                        selectedColor: Colors.deepPurple,
+                        // ignore: prefer_const_constructors
                         todayStyle: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
-                            color: Colors.white)),
+                            color: Colors.black)),
                     headerStyle: HeaderStyle(
                       centerHeaderTitle: true,
                       formatButtonDecoration: BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.deepPurple,
+                        borderRadius: BorderRadius.circular(50.0),
                       ),
+                      // ignore: prefer_const_constructors
                       formatButtonTextStyle: TextStyle(color: Colors.white),
                       formatButtonShowsNext: false,
                     ),
-                    startingDayOfWeek: StartingDayOfWeek.monday,
+                    startingDayOfWeek: StartingDayOfWeek.sunday,
                     onDaySelected: (date, events) {
                       setState(() {
                         _selectedEvents = events;
                       });
                     },
                     builders: CalendarBuilders(
+                      singleMarkerBuilder: (context, date, event) {
+                        return Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: const Color.fromRGBO(255, 255, 255, 1.0)),
+                          width: 7.0,
+                          height: 7.0,
+                          margin: const EdgeInsets.symmetric(horizontal: 1.0),
+                        );
+                      },
                       selectedDayBuilder: (context, date, events) => Container(
                           margin: const EdgeInsets.all(4.0),
                           alignment: Alignment.center,
@@ -122,10 +140,13 @@ class _HomePageState extends State<HomePage> {
                           margin: const EdgeInsets.all(4.0),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                              color: Colors.orange,
+                              // color: Colors.deepPurple,
+                              border: Border.all(
+                                  width: 2.2, color: Colors.deepPurple),
                               borderRadius: BorderRadius.circular(10.0)),
                           child: Text(
                             date.day.toString(),
+                            // ignore: prefer_const_constructors
                             style: TextStyle(color: Colors.white),
                           )),
                     ),

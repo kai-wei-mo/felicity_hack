@@ -55,7 +55,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   decoration: InputDecoration(
                       labelText: "Title",
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Colors.black87,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
@@ -71,7 +71,9 @@ class _AddEventPageState extends State<AddEventPage> {
                       (value.isEmpty) ? "Please Enter description" : null,
                   style: style,
                   decoration: InputDecoration(
-                      labelText: "description",
+                      labelText: "Description",
+                      filled: true,
+                      fillColor: Colors.black87,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
@@ -109,15 +111,17 @@ class _AddEventPageState extends State<AddEventPage> {
                               setState(() {
                                 processing = true;
                               });
-                              final data = {
-                                "title": _title.text,
-                                "description": _description.text,
-                                "event_date": widget.note.eventDate
-                              };
                               if (widget.note != null) {
-                                await eventDBS.updateData(widget.note.id, data);
+                                await eventDBS.updateData(widget.note.id, {
+                                  "title": _title.text,
+                                  "description": _description.text,
+                                  "event_date": widget.note.eventDate
+                                });
                               } else {
-                                await eventDBS.create(data);
+                                await eventDBS.createItem(EventModel(
+                                    title: _title.text,
+                                    description: _description.text,
+                                    eventDate: DateTime.now()));
                               }
                               Navigator.pop(context);
                               setState(() {
